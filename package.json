@@ -8,5 +8,8 @@
   },
   "keywords": [],
   "author": "Hungry Bear Studio <roar@hungrybearstudio.com> (hungrybearstudio.com)",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^10.0.0"
+  }
 }
