@@ -17,9 +17,7 @@ module.exports = async (req, res) => {
     },
   });
 
-  const result = await response.json();
-
   res.json({
-    spaces: result
+    spaces: response
   })
 }
