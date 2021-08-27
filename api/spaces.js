@@ -16,10 +16,10 @@ module.exports = async (req, res) => {
     },
   });
 
-  // const spaces = await response.json()
-  return res.send(response)
+  const spaces = await response.json()
+  // return res.send(response)
 
-  // return res.json({
-  //   spaces
-  // })
+  return res.json({
+    spaces
+  })
 }
