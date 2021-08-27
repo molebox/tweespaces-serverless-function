@@ -4,10 +4,10 @@ const fetch = require('node-fetch')
 
 const SPACES_URL = 'https://api.twitter.com/2/spaces/search?query=';
 
-module.exports = (req, res) => {
+module.exports = async (req, res) => {
 
   const { state } = req.query;
-  const url = `${SPACES_URL}${query}&state=${state || 'live'}&space.fields=participant_count,scheduled_start,title&expansions=creator_id&user.fields=name,description,username`;
+  const url = `${SPACES_URL}${query}&state=${state}&space.fields=participant_count,scheduled_start,title&expansions=creator_id&user.fields=name,description,username`;
 
   const response = await fetch(url, {
     method: 'GET',
