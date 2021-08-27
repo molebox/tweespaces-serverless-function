@@ -10,7 +10,6 @@
   "author": "Hungry Bear Studio <roar@hungrybearstudio.com> (hungrybearstudio.com)",
   "license": "ISC",
   "dependencies": {
-    "crypto-js": "^4.1.1",
     "dotenv": "^10.0.0",
     "node-fetch": "^2.6.1"
   }
