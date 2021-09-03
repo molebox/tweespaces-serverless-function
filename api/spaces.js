@@ -26,14 +26,16 @@ function runMiddleware(req, res, fn) {
 
 export default async (req, res) => {
   const { body: { state, query } } = req;
+
   await runMiddleware(req, res, cors)
+
   const url = `${SPACES_URL}${query}&state=${state}&space.fields=participant_count,scheduled_start,title&expansions=creator_id&user.fields=name,description,username`;
 
   async function fetchSpaces() {
     try {
-      const response = await axios.get(url);
+      const spaces = await axios.get(url);
       return res.json({
-        spaces: response
+        spaces: spaces
       })
     } catch (error) {
       return res.status(500).json({ message: 'Error: ', error })
