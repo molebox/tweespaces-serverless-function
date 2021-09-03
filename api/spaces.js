@@ -11,22 +11,23 @@ const cors = Cors({
 
 const SPACES_URL = 'https://api.twitter.com/2/spaces/search?query=';
 
+function runMiddleware(req, res, fn) {
+  return new Promise((resolve, reject) => {
+    fn(req, res, (result) => {
+      if (result instanceof Error) {
+        return reject(result)
+      }
+
+      return resolve(result)
+    })
+  })
+}
+
+
 export default async (req, res) => {
   const { body: { state, query } } = req;
   console.log(state, query)
   const url = `${SPACES_URL}${query}&state=${state}&space.fields=participant_count,scheduled_start,title&expansions=creator_id&user.fields=name,description,username`;
-
-  function runMiddleware(req, res, fn) {
-    return new Promise((resolve, reject) => {
-      fn(req, res, (result) => {
-        if (result instanceof Error) {
-          return reject(result)
-        }
-
-        return resolve(result)
-      })
-    })
-  }
 
   async function fetchSpaces() {
     try {
