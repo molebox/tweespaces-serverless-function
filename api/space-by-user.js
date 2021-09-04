@@ -2,6 +2,7 @@ require('dotenv').config();
 import axios from 'axios'
 
 const USER_BY_USERNAME_URL = 'https://api.twitter.com/2/users/by/username/';
+const SPACE_BY_USER_URL = `https://api.twitter.com/2/spaces/by/creator_id?user_ids=`
 
 async function getUserIdByUsername(username) {
     const url = `${USER_BY_USERNAME_URL}${username}?user.fields=id`;
@@ -13,10 +14,21 @@ async function getUserIdByUsername(username) {
     }
 }
 
+async function getSpaceByUser(id) {
+    const url = `${SPACE_BY_USER_URL}${id}&space.fields=participant_count,scheduled_start,title&expansions=creator_id&user.fields=name,description,username`;
+    try {
+        const result = await axios.get(url, { headers: { 'Authorization': `Bearer ${process.env.BEARER}` } });
+        return result
+    } catch (error) {
+        return error
+    }
+}
+
 export default async (req, res) => {
     const { body: { username } } = req;
     try {
-        const result = await getUserIdByUsername(username)
+        const user = await getUserIdByUsername(username)
+        const result = await getSpaceByUser(user.data.id)
         res.send({
             status: 200,
             spaces: result.data
