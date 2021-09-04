@@ -27,7 +27,6 @@ const SPACES_URL = 'https://api.twitter.com/2/spaces/search?query=';
 
 async function getSpaces(query, state) {
   const url = `${SPACES_URL}${query}&state=${state}&space.fields=participant_count,scheduled_start,title&expansions=creator_id&user.fields=name,description,username`;
-  let spaces;
   try {
     return await axios.get(url, { headers: { 'Authorization': `Bearer ${process.env.BEARER}` } });
   } catch (error) {
@@ -39,13 +38,12 @@ async function getSpaces(query, state) {
 export default async (req, res) => {
   const { body: { state, query } } = req;
 
-  const result = await getSpaces(query, state)
-  console.log({ result })
   try {
-
+    const result = await getSpaces(query, state)
+    console.log({ result })
     res.send({
       status: 200,
-      spaces: await getSpaces(query, state)
+      spaces: result.data
     })
   } catch (error) {
     res.send({
