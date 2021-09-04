@@ -32,6 +32,7 @@ async function getSpaces(query, state) {
     console.log('the result from twitter: ', result)
     return result
   } catch (error) {
+    console.log('the error from twitter: ', error)
     return error
   }
 
