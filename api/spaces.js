@@ -46,6 +46,7 @@ export default async (req, res) => {
       spaces: result
     })
   } catch (error) {
+    console.log({ error })
     res.send({
       status: 500,
       message: error.message,
