@@ -43,7 +43,7 @@ export default async (req, res) => {
     console.log(result)
     res.send({
       status: 200,
-      spaces: await getSpaces(query, state)
+      spaces: JSON.stringify(await getSpaces(query, state))
     })
   } catch (error) {
     console.log({ error })
