@@ -27,22 +27,20 @@ function runMiddleware(req, res, fn) {
 export default async (req, res) => {
   const { body: { state, query } } = req;
 
-  await runMiddleware(req, res, cors)
-
   const url = `${SPACES_URL}${query}&state=${state}&space.fields=participant_count,scheduled_start,title&expansions=creator_id&user.fields=name,description,username`;
-
-  async function fetchSpaces() {
-    try {
-      const spaces = await axios.get(url);
-      return res.json({
-        spaces: spaces
-      })
-    } catch (error) {
-      return res.status(500).json({ message: 'Error: ', error })
-    }
+  const header = {
+    headers: { Authorization: `Bearer ${process.env.BEARER}` }
   }
+  try {
+    const spaces = await axios.get(url, header);
+    //await runMiddleware(req, res, cors)
 
-  await fetchSpaces()
+    return res.send({
+      ...spaces
+    })
+  } catch (error) {
+    return res.status(500).json({ message: 'Error, something went wrong: ', error })
+  }
 }
 
   // const response = await fetch(url, {
