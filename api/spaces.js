@@ -11,12 +11,10 @@ async function getSpaces(query, state) {
   } catch (error) {
     return error
   }
-
 }
 
 export default async (req, res) => {
   const { body: { state, query } } = req;
-
   try {
     const result = await getSpaces(query, state)
     res.send({
@@ -29,5 +27,4 @@ export default async (req, res) => {
       message: error.message,
     })
   }
-
 }
