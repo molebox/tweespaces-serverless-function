@@ -39,11 +39,12 @@ export default async (req, res) => {
   const { body: { state, query } } = req;
 
   try {
-    const result = await getSpaces(query, state)
-    console.log(result)
+    const data = await getSpaces(query, state)
+    const result = JSON.stringify(data)
+    console.log({ result })
     res.send({
       status: 200,
-      spaces: JSON.stringify(await getSpaces(query, state))
+      spaces: result
     })
   } catch (error) {
     console.log({ error })
