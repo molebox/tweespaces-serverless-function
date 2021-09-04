@@ -26,21 +26,21 @@ function runMiddleware(req, res, fn) {
 
 export default async (req, res) => {
   const { body: { state, query } } = req;
-
+  console.log({ state, query })
   const url = `${SPACES_URL}${query}&state=${state}&space.fields=participant_count,scheduled_start,title&expansions=creator_id&user.fields=name,description,username`;
-  const header = {
-    headers: { Authorization: `Bearer ${process.env.BEARER}` }
-  }
+
   try {
-    const spaces = await axios.get(url, header);
-    //await runMiddleware(req, res, cors)
+    await runMiddleware(req, res, cors)
+    const spaces = await axios.get(url, { Authorization: `Bearer ${process.env.BEARER}` });
+
 
     return res.send({
       ...spaces
     })
   } catch (error) {
-    return res.status(500).json({ message: 'Error, something went wrong: ', error })
+    return res.status(500).send({ message: 'Error, something went wrong: ', error })
   }
+
 }
 
   // const response = await fetch(url, {
