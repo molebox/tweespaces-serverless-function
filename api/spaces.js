@@ -40,7 +40,7 @@ export default async (req, res) => {
 
   try {
     const result = await getSpaces(query, state)
-    console.log({ result })
+    console.log(result.data)
     res.send({
       status: 200,
       spaces: result.data
