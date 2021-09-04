@@ -43,6 +43,8 @@ export default async (req, res) => {
 
   try {
     const result = await getSpaces(query, state)
+    console.log('result.data: ', result.data)
+    console.log('JSON.stringify(result.data): ', JSON.stringify(result.data))
     res.send({
       status: 200,
       spaces: result.data
