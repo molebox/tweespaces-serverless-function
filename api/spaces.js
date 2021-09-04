@@ -29,7 +29,7 @@ async function getSpaces(query, state) {
   const url = `${SPACES_URL}${query}&state=${state}&space.fields=participant_count,scheduled_start,title&expansions=creator_id&user.fields=name,description,username`;
   let spaces;
   try {
-    spaces = await axios.get(url, { Authorization: `Bearer ${process.env.BEARER}` });
+    spaces = await axios.get(url, { headers: { 'Authorization': `Bearer ${process.env.BEARER}` } });
     console.log({ spaces })
     return spaces;
   } catch (error) {
