@@ -28,7 +28,9 @@ export default async (req, res) => {
     const { body: { username } } = req;
     try {
         const user = await getUserIdByUsername(username)
+        console.log({ user })
         const result = await getSpaceByUser(user.data.id)
+        console.log({ result })
         res.send({
             status: 200,
             spaces: result.data
