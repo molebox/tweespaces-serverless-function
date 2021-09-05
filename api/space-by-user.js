@@ -43,10 +43,10 @@ export default async (req, res) => {
     try {
         const user = await getUserIdByUsername(username)
         console.log({ user })
-        const id = user.data.data.id;
+        // const id = user.data.data.id;
 
-        const result = await getSpaceByUser(id)
-        console.log({ result })
+        // const result = await getSpaceByUser(id)
+        // console.log({ result })
 
         res.send({
             status: 200,
