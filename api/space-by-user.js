@@ -31,7 +31,7 @@ export default async (req, res) => {
     try {
         const user = await getUserIdByUsername(username)
         console.log({ user })
-        const result = await getSpaceByUser(user.data.spaces.data.id)
+        const result = await getSpaceByUser(user.data.id)
         console.log({ result })
         res.send({
             status: 200,
