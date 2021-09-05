@@ -9,7 +9,7 @@ async function getUserIdByUsername(username) {
     try {
         const result = await axios.get(url, { headers: { 'Authorization': `Bearer ${process.env.BEARER}` } });
         console.log('get id: ', result)
-        return JSON.stringify(result)
+        return JSON.stringify(result.data)
     } catch (error) {
         return error.message
     }
@@ -20,7 +20,7 @@ async function getSpaceByUser(id) {
     const url = `${SPACE_BY_USER_URL}${id}&space.fields=participant_count,scheduled_start,title&expansions=creator_id&user.fields=name,description,username`;
     try {
         const result = await axios.get(url, { headers: { 'Authorization': `Bearer ${process.env.BEARER}` } });
-        return JSON.stringify(result)
+        return JSON.stringify(result.data)
     } catch (error) {
         return error.message
     }
