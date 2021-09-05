@@ -15,8 +15,7 @@ async function getUserIdByUsername(username) {
 }
 
 async function getSpaceByUser(id) {
-    // const url = `${SPACE_BY_USER_URL}${id}&space.fields=participant_count,scheduled_start,title&expansions=creator_id&user.fields=name,description,username`;
-    const url = `${SPACE_BY_USER_URL}${id}`;
+    const url = `${SPACE_BY_USER_URL}${id}&space.fields=participant_count,scheduled_start,title&expansions=creator_id&user.fields=name,description,username`;
 
     try {
         const result = await axios.get(url, { headers: { 'Authorization': `Bearer ${process.env.BEARER}` } });
@@ -43,12 +42,12 @@ export default async (req, res) => {
     try {
         const user = await getUserIdByUsername(username)
 
-        // const result = await getSpaceByUser(user.data.id)
-        // console.log('Get user space result: ', result)
+        const result = await getSpaceByUser(user.data.id)
+        console.log('Get user space result: ', result)
 
         res.send({
             status: 200,
-            spaces: user.data
+            spaces: result.data
         })
 
 
