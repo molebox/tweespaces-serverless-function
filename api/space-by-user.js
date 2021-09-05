@@ -33,11 +33,13 @@ async function getUserSpace(username) {
         const idResult = await axios.get(getIdUrl, { headers: { 'Authorization': `Bearer ${process.env.BEARER}` } });
         console.log('get id: ', idResult)
 
-        const userSpaceUrl = `${SPACE_BY_USER_URL}${idResult.data.id}&space.fields=participant_count,scheduled_start,title&expansions=creator_id&user.fields=name,description,username`;
+        if (idResult) {
+            const userSpaceUrl = `${SPACE_BY_USER_URL}${idResult.data.id}&space.fields=participant_count,scheduled_start,title&expansions=creator_id&user.fields=name,description,username`;
 
-        const result = await axios.get(userSpaceUrl, { headers: { 'Authorization': `Bearer ${process.env.BEARER}` } });
+            const result = await axios.get(userSpaceUrl, { headers: { 'Authorization': `Bearer ${process.env.BEARER}` } });
 
-        return idResult
+            return result
+        }
     } catch (error) {
         return error
     }
