@@ -46,9 +46,11 @@ export default async (req, res) => {
         const id = user.data.id;
         const result = await getSpaceByUser(id)
         console.log({ result })
+
+        const user = user.data
         res.send({
             status: 200,
-            user: result.data
+            user
         })
     } catch (error) {
         res.send({
