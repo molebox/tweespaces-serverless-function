@@ -37,7 +37,7 @@ async function getUserSpace(username) {
 
         const result = await axios.get(userSpaceUrl, { headers: { 'Authorization': `Bearer ${process.env.BEARER}` } });
 
-        return result
+        return idResult
     } catch (error) {
         return error
     }
