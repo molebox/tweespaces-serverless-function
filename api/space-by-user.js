@@ -11,7 +11,7 @@ async function getUserIdByUsername(username) {
         console.log('get id: ', result)
         return JSON.stringify(result)
     } catch (error) {
-        return error
+        return error.message
     }
 }
 
@@ -22,7 +22,7 @@ async function getSpaceByUser(id) {
         const result = await axios.get(url, { headers: { 'Authorization': `Bearer ${process.env.BEARER}` } });
         return JSON.stringify(result)
     } catch (error) {
-        return error
+        return error.message
     }
 }
 
@@ -43,7 +43,7 @@ export default async (req, res) => {
     try {
         const user = await getUserIdByUsername(username)
         console.log({ user })
-        const id = user.data.id;
+        const id = user.data.data.id;
 
         const result = await getSpaceByUser(id)
         console.log({ result })
