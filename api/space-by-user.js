@@ -50,7 +50,7 @@ export default async (req, res) => {
 
         res.send({
             status: 200,
-            spaces: user.data
+            spaces: user.data.data
         })
 
 
