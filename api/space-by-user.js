@@ -69,6 +69,7 @@ export default async (req, res) => {
         const result = await getUserSpace(username)
 
         if (result) {
+            console.log({ result })
             res.send({
                 status: 200,
                 spaces: result.data
