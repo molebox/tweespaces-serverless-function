@@ -9,7 +9,7 @@ async function getUserIdByUsername(username) {
     try {
         const result = await axios.get(url, { headers: { 'Authorization': `Bearer ${process.env.BEARER}` } });
         console.log('get id: ', result)
-        return result
+        return result.data
     } catch (error) {
         return error
     }
@@ -20,30 +20,9 @@ async function getSpaceByUser(id) {
     const url = `${SPACE_BY_USER_URL}${id}&space.fields=participant_count,scheduled_start,title&expansions=creator_id&user.fields=name,description,username`;
     try {
         const result = await axios.get(url, { headers: { 'Authorization': `Bearer ${process.env.BEARER}` } });
-        return result
-    } catch (error) {
-        return error
-    }
-}
-
-async function getUserSpace(username) {
-    const getIdUrl = `${USER_BY_USERNAME_URL}${username}`;
-    let id;
-    try {
-        const idResult = await axios.get(getIdUrl, { headers: { 'Authorization': `Bearer ${process.env.BEARER}` } });
-        id = idResult.data.id;
-    } catch (error) {
-        return console.log('Fetch id error: ', error)
-    }
-
-    try {
-        const userSpaceUrl = `${SPACE_BY_USER_URL}${id}&space.fields=participant_count,scheduled_start,title&expansions=creator_id&user.fields=name,description,username`;
-
-        const result = await axios.get(userSpaceUrl, { headers: { 'Authorization': `Bearer ${process.env.BEARER}` } });
-
         return result.data
     } catch (error) {
-        return console.log('Fetch user spaces error: ', error)
+        return error
     }
 }
 
@@ -62,21 +41,18 @@ export default async (req, res) => {
     const { body: { username } } = req;
     console.log({ username })
     try {
-        // const user = await getUserIdByUsername(username)
-        // console.log({ user })
-        // const id = user.data.id;
-        // const result = await getSpaceByUser(id)
-        // console.log({ result })
+        const user = await getUserIdByUsername(username)
+        console.log({ user })
+        const id = user.data.id;
 
-        const result = await getUserSpace(username)
+        const result = await getSpaceByUser(id)
+        console.log({ result })
 
-        if (result) {
-            console.log({ result })
-            res.send({
-                status: 200,
-                spaces: result.data
-            })
-        }
+        res.send({
+            status: 200,
+            spaces: result.data
+        })
+
 
     } catch (error) {
         res.send({
