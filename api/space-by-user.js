@@ -25,13 +25,24 @@ async function getSpaceByUser(id) {
     }
 }
 
+// server response: {
+//     status: 200,
+//         spaces: {
+//         data: {
+//             id: '1085477171055996928',
+//                 name: 'Danny Thompson',
+//                     username: 'DThompsonDev'
+//         }
+//     }
+// }
+
 export default async (req, res) => {
     const { body: { username } } = req;
     console.log({ username })
     try {
         const user = await getUserIdByUsername(username)
         console.log({ user })
-        const result = await getSpaceByUser(user.id)
+        const result = await getSpaceByUser(user.data.id)
         console.log({ result })
         res.send({
             status: 200,
