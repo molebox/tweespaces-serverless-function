@@ -8,6 +8,7 @@ async function getUserIdByUsername(username) {
     const url = `${USER_BY_USERNAME_URL}${username}?user.fields=id`;
     try {
         const result = await axios.get(url, { headers: { 'Authorization': `Bearer ${process.env.BEARER}` } });
+        console.log('get id: ', result)
         return result
     } catch (error) {
         return error
@@ -29,7 +30,7 @@ export default async (req, res) => {
     try {
         const user = await getUserIdByUsername(username)
         console.log({ user })
-        const result = await getSpaceByUser(user.data.id)
+        const result = await getSpaceByUser(user.data[0].id)
         console.log({ result })
         res.send({
             status: 200,
