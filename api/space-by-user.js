@@ -28,20 +28,22 @@ async function getSpaceByUser(id) {
 
 async function getUserSpace(username) {
     const getIdUrl = `${USER_BY_USERNAME_URL}${username}`;
-
+    let id;
     try {
         const idResult = await axios.get(getIdUrl, { headers: { 'Authorization': `Bearer ${process.env.BEARER}` } });
-        console.log('get id: ', idResult)
-
-        if (idResult) {
-            const userSpaceUrl = `${SPACE_BY_USER_URL}${idResult.data.id}&space.fields=participant_count,scheduled_start,title&expansions=creator_id&user.fields=name,description,username`;
-
-            const result = await axios.get(userSpaceUrl, { headers: { 'Authorization': `Bearer ${process.env.BEARER}` } });
-
-            return result.data
-        }
+        id = idResult.data.id;
     } catch (error) {
-        return error
+        return console.log('Fetch id error: ', error)
+    }
+
+    try {
+        const userSpaceUrl = `${SPACE_BY_USER_URL}${id}&space.fields=participant_count,scheduled_start,title&expansions=creator_id&user.fields=name,description,username`;
+
+        const result = await axios.get(userSpaceUrl, { headers: { 'Authorization': `Bearer ${process.env.BEARER}` } });
+
+        return result.data
+    } catch (error) {
+        return console.log('Fetch user spaces error: ', error)
     }
 }
 
