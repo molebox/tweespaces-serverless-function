@@ -8,7 +8,7 @@ async function getUserIdByUsername(username) {
     const url = `${USER_BY_USERNAME_URL}${username}`;
     try {
         const result = await axios.get(url, { headers: { 'Authorization': `Bearer ${process.env.BEARER}` } });
-        return JSON.stringify(result.data)
+        return result.data
     } catch (error) {
         return console.log('Get username error: ', error.message)
     }
@@ -18,7 +18,7 @@ async function getSpaceByUser(id) {
     const url = `${SPACE_BY_USER_URL}${id}&space.fields=participant_count,scheduled_start,title&expansions=creator_id&user.fields=name,description,username`;
     try {
         const result = await axios.get(url, { headers: { 'Authorization': `Bearer ${process.env.BEARER}` } });
-        return JSON.stringify(result.data)
+        return result.data
     } catch (error) {
         return console.log('Get user space error: ', error.message)
     }
