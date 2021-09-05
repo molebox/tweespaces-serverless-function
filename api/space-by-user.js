@@ -35,7 +35,7 @@ export default async (req, res) => {
         console.log({ result })
         res.send({
             status: 200,
-            spaces: user
+            spaces: user.data
         })
     } catch (error) {
         res.send({
