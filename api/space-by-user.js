@@ -5,7 +5,7 @@ const USER_BY_USERNAME_URL = 'https://api.twitter.com/2/users/by/username/';
 const SPACE_BY_USER_URL = `https://api.twitter.com/2/spaces/by/creator_id?user_ids=`
 
 async function getUserIdByUsername(username) {
-    const url = `${USER_BY_USERNAME_URL}${username}?user.fields=id`;
+    const url = `${USER_BY_USERNAME_URL}${username}`;
     try {
         const result = await axios.get(url, { headers: { 'Authorization': `Bearer ${process.env.BEARER}` } });
         console.log('get id: ', result)
@@ -50,7 +50,7 @@ export default async (req, res) => {
 
         res.send({
             status: 200,
-            spaces: user.data.data
+            spaces: user
         })
 
 
