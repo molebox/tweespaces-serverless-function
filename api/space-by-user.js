@@ -27,7 +27,7 @@ async function getSpaceByUser(id) {
 }
 
 async function getUserSpace(username) {
-    const getIdUrl = `${USER_BY_USERNAME_URL}${username}?user.fields=id`;
+    const getIdUrl = `${USER_BY_USERNAME_URL}${username}`;
 
     try {
         const idResult = await axios.get(getIdUrl, { headers: { 'Authorization': `Bearer ${process.env.BEARER}` } });
