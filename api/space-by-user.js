@@ -16,7 +16,8 @@ async function getUserIdByUsername(username) {
 }
 
 async function getSpaceByUser(id) {
-    const url = `${SPACE_BY_USER_URL}${id}&space.fields=participant_count,scheduled_start,title&expansions=creator_id&user.fields=name,description,username`;
+    // const url = `${SPACE_BY_USER_URL}${id}&space.fields=participant_count,scheduled_start,title&expansions=creator_id&user.fields=name,description,username`;
+    const url = `${SPACE_BY_USER_URL}${id}`;
 
     try {
         const { data } = await axios.get(url, { headers: { 'Authorization': `Bearer ${process.env.BEARER}` } });
@@ -47,6 +48,13 @@ export default async (req, res) => {
         const { data } = await getUserIdByUsername(username)
         if (data) {
             id = data.id
+            const { data } = await getSpaceByUser(data.id)
+            console.log('Get user space result: ', data)
+
+            res.send({
+                status: 200,
+                spaces: data
+            })
         }
     } catch (error) {
         res.send({
@@ -55,21 +63,21 @@ export default async (req, res) => {
         })
     }
 
-    try {
+    // try {
 
-        const { data } = await getSpaceByUser(id)
-        console.log('Get user space result: ', data)
+    //     const { data } = await getSpaceByUser(id)
+    //     console.log('Get user space result: ', data)
 
-        res.send({
-            status: 200,
-            spaces: data
-        })
+    //     res.send({
+    //         status: 200,
+    //         spaces: data
+    //     })
 
 
-    } catch (error) {
-        res.send({
-            status: 500,
-            message: `Error getting user spaces: ${error.message}`,
-        })
-    }
+    // } catch (error) {
+    //     res.send({
+    //         status: 500,
+    //         message: `Error getting user spaces: ${error.message}`,
+    //     })
+    // }
 }
