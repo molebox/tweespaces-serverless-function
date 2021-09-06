@@ -63,6 +63,7 @@ async function getUserSpace(username) {
 export default async (req, res) => {
     const { body: { username } } = req;
 
+    const getUserIdUrl = `${USER_BY_USERNAME_URL}${username}`;
 
     try {
         // const { data } = await getUserIdByUsername(username)
@@ -71,7 +72,8 @@ export default async (req, res) => {
         //     const { data } = await getSpaceByUser(data.id)
         //     console.log('Get user space result: ', data)
 
-        const [getUserId] = await Promise.all([getUserIdByUsername(username)])
+        const [getUserId] = await Promise.all([axios.get(getUserIdUrl, { headers: { 'Authorization': `Bearer ${process.env.BEARER}` } })])
+        console.log({ getUserId })
 
         const { data } = await getSpaceByUser(getUserId.data.id)
 
