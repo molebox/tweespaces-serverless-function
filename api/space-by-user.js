@@ -70,18 +70,22 @@ export default async (req, res) => {
         //     const { data } = await getSpaceByUser(data.id)
         //     console.log('Get user space result: ', data)
 
-        const [getUserId] = await Promise.all([axios.get(`${USER_BY_USERNAME_URL}${username}`, { headers: { 'Authorization': `Bearer ${process.env.BEARER}` } })])
+        // const [getUserId] = await Promise.all([axios.get(`${USER_BY_USERNAME_URL}${username}`, { headers: { 'Authorization': `Bearer ${process.env.BEARER}` } })])
 
-        const data = await axios.get(`${SPACE_BY_USER_URL}${getUserId.data.data.id.toString()}`, { headers: { 'Authorization': `Bearer ${process.env.BEARER}` } });
-        console.log('Get user space success!: ', data)
+        // const data = await axios.get(`${SPACE_BY_USER_URL}${getUserId.data.data.id.toString()}`, { headers: { 'Authorization': `Bearer ${process.env.BEARER}` } });
+        // console.log('Get user space success!: ', data)
 
         // const { data } = await getSpaceByUser(getUserId.data.data.id)
 
         // const userSpace = await getUserSpace(username)
 
+        const user = await axios.get(`${USER_BY_USERNAME_URL}${username}`, { headers: { 'Authorization': `Bearer ${process.env.BEARER}` } })
+
+        const userSpace = await axios.get(`${SPACE_BY_USER_URL}${user.data.data.id}`, { headers: { 'Authorization': `Bearer ${process.env.BEARER}` } })
+
         res.send({
             status: 200,
-            spaces: data
+            spaces: userSpace.data
         })
     } catch (error) {
         res.send({
