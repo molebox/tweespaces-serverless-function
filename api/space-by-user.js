@@ -50,6 +50,9 @@ async function getUserSpace(username) {
             }).then((response) => {
                 return response.data
             })
+            .catch((error) => {
+                return console.log('Error getting users spaces: ', error.message)
+            })
 
     } catch (error) {
         return console.log('Get user space error: ', error.message)
