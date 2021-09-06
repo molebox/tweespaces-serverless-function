@@ -41,23 +41,35 @@ async function getSpaceByUser(id) {
 
 export default async (req, res) => {
     const { body: { username } } = req;
+    let id;
 
     try {
-        const { data: userData } = await getUserIdByUsername(username)
+        const { data } = await getUserIdByUsername(username)
+        if (data) {
+            id = data.id
+        }
+    } catch (error) {
+        res.send({
+            status: 500,
+            message: `Error getting user id: ${error.message}`,
+        })
+    }
 
-        const { data } = await getSpaceByUser(userData.data.id)
+    try {
+
+        const { data } = await getSpaceByUser(id)
         console.log('Get user space result: ', data)
 
         res.send({
             status: 200,
-            spaces: userData.data
+            spaces: data
         })
 
 
     } catch (error) {
         res.send({
             status: 500,
-            message: error.message,
+            message: `Error getting user spaces: ${error.message}`,
         })
     }
 }
