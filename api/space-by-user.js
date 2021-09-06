@@ -71,11 +71,15 @@ export default async (req, res) => {
         //     const { data } = await getSpaceByUser(data.id)
         //     console.log('Get user space result: ', data)
 
-        const userSpace = await getUserSpace(username)
+        const [getUserId] = await Promise.all([getUserIdByUsername(username)])
+
+        const { data } = await getSpaceByUser(getUserId.data.id)
+
+        // const userSpace = await getUserSpace(username)
 
         res.send({
             status: 200,
-            spaces: userSpace
+            spaces: data
         })
     } catch (error) {
         res.send({
