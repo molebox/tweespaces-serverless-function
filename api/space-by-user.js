@@ -8,8 +8,8 @@ async function getUserIdByUsername(username) {
     const url = `${USER_BY_USERNAME_URL}${username}`;
     try {
         const { data } = await axios.get(url, { headers: { 'Authorization': `Bearer ${process.env.BEARER}` } });
-        console.log('Get username success!: ', data.id)
-        return data.id
+        console.log('Get username success!: ', data)
+        return data
     } catch (error) {
         return console.log('Get username error: ', error.message)
     }
