@@ -8,8 +8,8 @@ async function getUserIdByUsername(username) {
     const url = `${USER_BY_USERNAME_URL}${username}`;
     try {
         const { data } = await axios.get(url, { headers: { 'Authorization': `Bearer ${process.env.BEARER}` } });
-        console.log('Get username success!: ', data)
-        return data
+        console.log('Get username success!: ', data.id)
+        return data.id
     } catch (error) {
         return console.log('Get username error: ', error.message)
     }
@@ -45,12 +45,12 @@ export default async (req, res) => {
     try {
         const { data: userData } = await getUserIdByUsername(username)
 
-        const { data } = await getSpaceByUser(userData.id)
+        const { data } = await getSpaceByUser(userData.data.id)
         console.log('Get user space result: ', result)
 
         res.send({
             status: 200,
-            spaces: userData.data
+            spaces: data
         })
 
 
