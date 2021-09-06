@@ -40,22 +40,40 @@ async function getSpaceByUser(id) {
 //     }
 // }
 
+async function getUserSpace(username) {
+    const getUserByUsernameUrl = `${USER_BY_USERNAME_URL}${username}`;
+    try {
+        await axios.get(getUserByUsernameUrl, { headers: { 'Authorization': `Bearer ${process.env.BEARER}` } })
+            .then((response) => {
+                const getSpaceByUserUrl = `${SPACE_BY_USER_URL}${response.data.id}`;
+                await axios.get(getSpaceByUserUrl, { headers: { 'Authorization': `Bearer ${process.env.BEARER}` } });
+            }).then((response) => {
+                return response.data
+            })
+
+    } catch (error) {
+        return console.log('Get user space error: ', error.message)
+
+    }
+}
+
 export default async (req, res) => {
     const { body: { username } } = req;
-    let id;
+
 
     try {
-        const { data } = await getUserIdByUsername(username)
-        if (data) {
-            id = data.id
-            const { data } = await getSpaceByUser(data.id)
-            console.log('Get user space result: ', data)
+        // const { data } = await getUserIdByUsername(username)
 
-            res.send({
-                status: 200,
-                spaces: data
-            })
-        }
+        //     id = data.id
+        //     const { data } = await getSpaceByUser(data.id)
+        //     console.log('Get user space result: ', data)
+
+        const userSpace = await getUserSpace(username)
+
+        res.send({
+            status: 200,
+            spaces: userSpace
+        })
     } catch (error) {
         res.send({
             status: 500,
