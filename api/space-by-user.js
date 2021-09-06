@@ -71,7 +71,7 @@ export default async (req, res) => {
         //     console.log('Get user space result: ', data)
 
         const [getUserId] = await Promise.all([axios.get(`${USER_BY_USERNAME_URL}${username}`, { headers: { 'Authorization': `Bearer ${process.env.BEARER}` } })])
-        console.log(getUserId.data.data)
+        console.log(getUserId.data.data.id)
 
         const data = await axios.get(`${SPACE_BY_USER_URL}${getUserId.data.data.id}`, { headers: { 'Authorization': `Bearer ${process.env.BEARER}` } });
         console.log('Get user space success!: ', data)
