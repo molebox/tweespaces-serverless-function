@@ -2,7 +2,7 @@ require('dotenv').config();
 import axios from 'axios'
 
 const USER_BY_USERNAME_URL = 'https://api.twitter.com/2/users/by/username/';
-const SPACE_BY_USER_URL = `https://api.twitter.com/2/spaces/by/creator_id?user_ids=`
+const SPACE_BY_USER_URL = `https://api.twitter.com/2/spaces/by/creator_ids?user_ids=`
 
 async function getUserIdByUsername(username) {
     const url = `${USER_BY_USERNAME_URL}${username}`;
@@ -79,9 +79,9 @@ export default async (req, res) => {
 
         // const userSpace = await getUserSpace(username)
 
-        // const user = await axios.get(`${USER_BY_USERNAME_URL}${username}`, { headers: { 'Authorization': `Bearer ${process.env.BEARER}` } })
+        const user = await axios.get(`${USER_BY_USERNAME_URL}${username}`, { headers: { 'Authorization': `Bearer ${process.env.BEARER}` } })
         // console.log('id: ', user.data.data.id)
-        const userSpace = await axios.get(`${SPACE_BY_USER_URL}${username}&space.fields=host_ids,created_at,creator_id,id,lang,invited_user_ids,participants,speaker_ids,started_at,state,title,updated_at,scheduled_start,is_ticketed&expansions=invited_user_ids,speaker_ids,creator_id,host_ids&user.fields=created_at,description,entities,id,location,name,pinned_tweet_id,profile_image_url,protected,public_metrics,url,username,verified,withheld`, { headers: { 'Authorization': `Bearer ${process.env.BEARER}` } })
+        const userSpace = await axios.get(`${SPACE_BY_USER_URL}${user.data.data.id}&space.fields=host_ids,created_at,creator_id,id,lang,invited_user_ids,participants,speaker_ids,started_at,state,title,updated_at,scheduled_start,is_ticketed&expansions=invited_user_ids,speaker_ids,creator_id,host_ids&user.fields=created_at,description,entities,id,location,name,pinned_tweet_id,profile_image_url,protected,public_metrics,url,username,verified,withheld`, { headers: { 'Authorization': `Bearer ${process.env.BEARER}` } })
 
         console.log({ userSpace })
         res.send({
