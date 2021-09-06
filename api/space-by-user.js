@@ -43,10 +43,10 @@ async function getSpaceByUser(id) {
 async function getUserSpace(username) {
     const getUserByUsernameUrl = `${USER_BY_USERNAME_URL}${username}`;
     try {
-        await axios.get(getUserByUsernameUrl, { headers: { 'Authorization': `Bearer ${process.env.BEARER}` } })
+        axios.get(getUserByUsernameUrl, { headers: { 'Authorization': `Bearer ${process.env.BEARER}` } })
             .then((response) => {
                 const getSpaceByUserUrl = `${SPACE_BY_USER_URL}${response.data.id}`;
-                await axios.get(getSpaceByUserUrl, { headers: { 'Authorization': `Bearer ${process.env.BEARER}` } });
+                axios.get(getSpaceByUserUrl, { headers: { 'Authorization': `Bearer ${process.env.BEARER}` } });
             }).then((response) => {
                 return response.data
             })
