@@ -82,6 +82,7 @@ export default async (req, res) => {
         const user = await axios.get(`${USER_BY_USERNAME_URL}${username}`, { headers: { 'Authorization': `Bearer ${process.env.BEARER}` } })
         console.log('id: ', user.data.data.id)
         const userSpace = await axios.get(`${SPACE_BY_USER_URL}${user.data.data.id}&space.fields=host_ids,created_at,creator_id,id,lang,invited_user_ids,participants,speaker_ids,started_at,state,title,updated_at,scheduled_start,is_ticketed&expansions=invited_user_ids,speaker_ids,creator_id,host_ids&user.fields=created_at,description,entities,id,location,name,pinned_tweet_id,profile_image_url,protected,public_metrics,url,username,verified,withheld`, { headers: { 'Authorization': `Bearer ${process.env.BEARER}` } })
+        console.log('url with id: ', `${SPACE_BY_USER_URL}${user.data.data.id}`)
         console.log({ userSpace })
         res.send({
             status: 200,
