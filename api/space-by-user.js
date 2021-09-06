@@ -8,6 +8,7 @@ async function getUserIdByUsername(username) {
     const url = `${USER_BY_USERNAME_URL}${username}`;
     try {
         const { data } = await axios.get(url, { headers: { 'Authorization': `Bearer ${process.env.BEARER}` } });
+        console.log('Get username success!: ', data)
         return data
     } catch (error) {
         return console.log('Get username error: ', error.message)
@@ -19,6 +20,8 @@ async function getSpaceByUser(id) {
 
     try {
         const { data } = await axios.get(url, { headers: { 'Authorization': `Bearer ${process.env.BEARER}` } });
+        console.log('Get user space success!: ', data)
+
         return data
     } catch (error) {
         return console.log('Get user space error: ', error.message)
@@ -40,16 +43,16 @@ export default async (req, res) => {
     const { body: { username } } = req;
 
     try {
-        await getUserIdByUsername(username).then(response => {
-            console.log({ response })
-            const { data } = await getSpaceByUser(response.id)
-            console.log('Get user space result: ', data)
+        const { data: userData } = await getUserIdByUsername(username)
 
-            res.send({
-                status: 200,
-                spaces: data
-            })
+        const { data } = await getSpaceByUser(userData.id)
+        console.log('Get user space result: ', result)
+
+        res.send({
+            status: 200,
+            spaces: data
         })
+
 
     } catch (error) {
         res.send({
